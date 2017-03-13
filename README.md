@@ -146,6 +146,7 @@ cmake -DUSE_SDL=ON -DUSE_RLGLUE=OFF -DBUILD_EXAMPLES=ON ..
 make -j 4
 cd ..
 pip install .
+   --- or) sudo -H pip install .
 
 
 7. tensorflow 1.0
