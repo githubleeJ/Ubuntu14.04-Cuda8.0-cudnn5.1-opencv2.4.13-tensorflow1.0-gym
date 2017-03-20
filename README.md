@@ -69,7 +69,7 @@ sudo vim .bashrc
     export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/cuda/lib64
     export CPATH=$CPATH:/usr/local/cuda/include
  sudo echo "/usr/local/cuda/lib64" > /etc/ld.so.conf.d/cuda.conf
-   ---- permission deny의 경우, sudo vim /etc/ld.so.conf.d/cuda.conf 를 친후 직접 /usr/local/cuda/lib64 
+   ---- permission deny의 경우, sudo vim /etc/ld.so.conf.d/cuda.conf 를 친후 직접 /usr/local/cuda/lib64          // must do it!!!
  sudo ldconfig
 
 
@@ -97,23 +97,18 @@ sudo ./name_of_driver --no-opengl-files
 sudo service lightdm start
 
 
-4. opencv 2.4.13 ---gpu supported!!!!
-sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev libeigen3-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common libv4l-dev libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev
+4. opencv 2.4.13 ---gpu supported!!!!  
+http://www.linuxidc.com/Linux/2016-12/138865.htm
 
- 
-sudo apt-get install build-essential cmake git
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends build-essential cmake libavcodec-dev libavformat-dev libgtk2.0-dev libgtkglext1 libgtkglext1-dev libjpeg-dev  libpng-dev libswscale-dev libtbb2 libtbb-dev libtiff-dev pkg-config unzip wget
 
-
-sudo apt-get install ffmpeg libopencv-dev libgtk-3-dev python-numpy python3-numpy libdc1394-22 libdc1394-22-dev libjpeg-dev libpng12-dev libtiff5-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libxine2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libv4l-dev libtbb-dev qtbase5-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip
- 
--download opencv2.4.13
-
-cd opencv-2.4.13
+cd opecvn-2.
 
 mkdir build
 cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_CUDA=ON -D ENABLE_FAST_MATH=ON -D CUDA_FAST_MATH=ON -D WITH_CUBLAS=1 -D WITH_NVCUVID=on -D CUDA_GENERATION=Auto ..
 
-cmake -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_VTK=ON ..
 
 make -j 8
 
@@ -128,7 +123,9 @@ sudo gedit /etc/bash.bashrc
 
 --- add   'PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig export PKG_CONFIG_PATH'
 
+sudo apt-get install python-opencv
 
+then, test import cv2
 
 5. gym
 git clone https://github.com/openai/gym
@@ -150,9 +147,56 @@ pip install .
 
 
 7. tensorflow 1.0
+http://tflearn.org/installation/
+
 (python 2.7 & GPU supported)
-export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.1-cp27-none-linux_x86_64.whl
-sudo pip  install --upgrade TF_PYTHON_URL
+export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp27-none-linux_x86_64.whl
+sudo pip  install --upgrade TF_BINARY_URL
 
+# Ubuntu/Linux 64-bit, CPU only, Python 2.7
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp27-none-linux_x86_64.whl
 
-http://www.linuxidc.com/Linux/2016-12/138865.htm
+# Ubuntu/Linux 64-bit, GPU enabled, Python 2.7
+# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp27-none-linux_x86_64.whl
+
+# Mac OS X, CPU only, Python 2.7:
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py2-none-any.whl
+
+# Mac OS X, GPU enabled, Python 2.7:
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/gpu/tensorflow_gpu-1.0.0-py2-none-any.whl
+
+# Ubuntu/Linux 64-bit, CPU only, Python 3.3
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp33-cp33m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, GPU enabled, Python 3.3
+# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp33-cp33m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, CPU only, Python 3.4
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp34-cp34m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, GPU enabled, Python 3.4
+# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp34-cp34m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, CPU only, Python 3.5
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp35-cp35m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, GPU enabled, Python 3.5
+# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp35-cp35m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, CPU only, Python 3.6
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.0.0-cp36-cp36m-linux_x86_64.whl
+
+# Ubuntu/Linux 64-bit, GPU enabled, Python 3.6
+# Requires CUDA toolkit 8.0 and CuDNN v5. For other versions, see "Installing from sources" below.
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.0-cp36-cp36m-linux_x86_64.whl
+
+# Mac OS X, CPU only, Python 3.4 or 3.5:
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.0.0-py3-none-any.whl
+
+# Mac OS X, GPU enabled, Python 3.4 or 3.5:
+$ export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/gpu/tensorflow_gpu-1.0.0-py3-none-any.whl
+
